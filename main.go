@@ -8,27 +8,42 @@ type User struct {
 	Locked       bool
 }
 
+func NewUser(name string) User {
+	return User{
+		Name: name,
+	}
+}
+
+func Fail(user *User) {
+	user.FailedLogins += 1
+	if user.FailedLogins > 0 {
+		user.Locked = true
+	}
+}
+
 func Reset(user *User) {
 	user.FailedLogins = 0
 	user.Locked = false
 }
 
+func (user *User) Reset() {
+	user.FailedLogins = 0
+	user.Locked = false
+}
+
 func main() {
-	myUser := User{
-		Name: "admin",
-	}
+	myUser := NewUser("Hans")
+	fmt.Println("Initial User:          ", myUser)
 
-	fmt.Println(myUser)
-
-	myUser.FailedLogins += 1
-
-	if myUser.FailedLogins > 0 {
-		myUser.Locked = true
-	}
-
-	fmt.Println(myUser)
+	Fail(&myUser)
+	fmt.Println("Fail User:             ", myUser)
 
 	Reset(&myUser)
+	fmt.Println("Reset User by function:", myUser)
 
-	fmt.Println(myUser)
+	Fail(&myUser)
+	fmt.Println("Fail User:             ", myUser)
+
+	myUser.Reset()
+	fmt.Println("Reset User by method:  ", myUser)
 }
