@@ -8,6 +8,11 @@ type User struct {
 	Locked       bool
 }
 
+func Reset(user *User) {
+	user.FailedLogins = 0
+	user.Locked = false
+}
+
 func main() {
 	myUser := User{
 		Name: "admin",
@@ -20,6 +25,10 @@ func main() {
 	if myUser.FailedLogins > 0 {
 		myUser.Locked = true
 	}
+
+	fmt.Println(myUser)
+
+	Reset(&myUser)
 
 	fmt.Println(myUser)
 }
