@@ -8,8 +8,8 @@ type User struct {
 	Locked       bool
 }
 
-func NewUser(name string) User {
-	return User{
+func NewUser(name string) *User {
+	return &User{
 		Name: name,
 	}
 }
@@ -35,15 +35,21 @@ func main() {
 	myUser := NewUser("Hans")
 	fmt.Println("Initial User:          ", myUser)
 
-	Fail(&myUser)
+	Fail(myUser)
 	fmt.Println("Fail User:             ", myUser)
 
-	Reset(&myUser)
+	Reset(myUser)
 	fmt.Println("Reset User by function:", myUser)
 
-	Fail(&myUser)
+	Fail(myUser)
 	fmt.Println("Fail User:             ", myUser)
 
 	myUser.Reset()
 	fmt.Println("Reset User by method:  ", myUser)
+
+	q := []int{2, 3, 5, 7, 11, 13}
+	fmt.Println(q)
+	fmt.Println("Length of slice:", len(q))
 }
+
+// https://go-basics.training.acend.ch/docs/basics/structs/#nested-structs
